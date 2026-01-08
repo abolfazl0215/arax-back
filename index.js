@@ -299,6 +299,19 @@ app.delete("/api/visas/:id", async (req, res) => {
   }
 });
 
+app.get("/api/getAllData", async (req, res) => {
+  try {
+    const blogs = await Blog.find();
+    const tours = await Tour.find();
+    const reviews = await Review.find();
+    const visas = await Visa.find();
+    res.json({ blogs, tours, reviews, visas });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
