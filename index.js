@@ -22,15 +22,6 @@ mongoose
   )
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
-// mongoose
-//   .connect("mongodb://localhost:27017/arax-back", {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => console.log("Connected to MongoDB"))
-//   .catch((err) => console.error("MongoDB connection error:", err));
-
-// ==================== BLOG ROUTES ====================
 
 // Get all blogs
 app.get("/api/blogs", async (req, res) => {
@@ -101,12 +92,13 @@ app.delete("/api/blogs/:id", async (req, res) => {
 // Get all tours
 app.get("/api/tours", async (req, res) => {
   try {
-    const filter = {};
-    // اگر ?special=true/false فرستاده شود، فقط همان نوع برگردد
-    if (typeof req.query.special !== "undefined") {
-      filter.special = req.query.special === "true";
-    }
-    const tours = await Tour.find(filter);
+    // const filter = {};
+    // // اگر ?special=true/false فرستاده شود، فقط همان نوع برگردد
+    // if (typeof req.query.special !== "undefined") {
+    //   filter.special = req.query.special === "true";
+    // }
+    const tours = await Tour.find({});
+    console.log({ tours });
     res.json(tours);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -238,7 +230,8 @@ app.delete("/api/reviews/:id", async (req, res) => {
 // Get all visas
 app.get("/api/visas", async (req, res) => {
   try {
-    const visas = await Visa.find();
+    const visas = await Visa.find({});
+    console.log({ visas });
     res.json(visas);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -310,7 +303,6 @@ app.get("/api/getAllData", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 // Start server
 app.listen(PORT, () => {
